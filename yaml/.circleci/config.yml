@@ -1,0 +1,186 @@
+version: 2.1
+
+executors:
+  python-executor:
+    docker:
+      - image: circleci/python:3.8
+    working_directory: ~/expense_tracker
+
+jobs:
+  lint:
+    executor: python-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Node.js
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+      - run:
+          name: Lint JavaScript code
+          command: npm run lint
+
+  yaml_lint:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run:
+          name: Install YAMLlint
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y npm
+            sudo npm install -g yaml-lint
+      - run:
+          name: Lint YAML files
+          command: |
+            yaml-lint **/*.yaml || true
+
+  gitleaks:
+    docker:
+      - image: zricethezav/gitleaks:v8.3.0
+    steps:
+      - checkout
+      - run:
+          name: Run Gitleaks
+          command: |
+            echo "AWS_SECRET_ACCESS_KEY=A9B8C7D6E5F4G3H2I1J0K9L8M7N6O5P4Q3R2S1" > app.py
+            gitleaks detect --source . --report-format json --report-path gitleaks-report.json
+            cat gitleaks-report.json
+
+  build:
+    executor: python-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Node.js
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+      - run:
+          name: Install dependencies
+          command: |
+            echo '{"dependencies": {"express": "4.0.0"}}' > package.json
+            npm install
+
+      - run:
+          name: Run tests
+          command: npm test
+
+      - run:
+          name: Check for vulnerabilities
+          command: npm audit --production
+
+  checkov:
+    docker:
+      - image: bridgecrew/checkov:2.0.0
+    steps:
+      - checkout
+      - run:
+          name: Run Checkov
+          command: |
+            checkov --directory infrastructure
+
+  terraform:
+    executor: python-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Terraform
+          command: |
+            curl -LO https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_amd64.zip
+            unzip terraform_1.5.0_linux_amd64.zip
+            sudo mv terraform /usr/local/bin/
+            terraform --version
+
+      - run:
+          name: Terraform init
+          command: terraform init
+          working_directory: infrastructure/
+
+      - run:
+          name: Terraform plan
+          command: terraform plan
+          working_directory: infrastructure/
+
+      - run:
+          name: Terraform apply (development)
+          when: on_success
+          command: terraform apply -auto-approve
+          working_directory: infrastructure/
+          environment:
+            AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+
+  docker:
+    executor: python-executor
+    steps:
+      - checkout
+      - run:
+          name: Login to AWS ECR
+          command: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
+
+      - run:
+          name: Build and tag Docker image
+          command: |
+            IMAGE_TAG=$(echo $CIRCLE_SHA1 | cut -c1-7)
+            docker build -t $ECR_REGISTRY/my-app:latest .
+
+      - run:
+          name: Push Docker image to AWS ECR
+          command: |
+            IMAGE_TAG=$(echo $CIRCLE_SHA1 | cut -c1-7)
+            docker push $ECR_REGISTRY/my-app:$IMAGE_TAG
+
+  deploy:
+    executor: python-executor
+    steps:
+      - checkout
+      - run:
+          name: Deploy to Development
+          when: << pipeline.parameters.deploy_to_development >>
+          command: |
+            echo "Deploying to development environment"
+            chmod 777 ~/.ssh/id_rsa
+
+      - run:
+          name: Deploy to Staging
+          when: << pipeline.parameters.deploy_to_staging >>
+          command: |
+            echo "Deploying to staging environment"
+
+      - run:
+          name: Deploy to Production
+          when: << pipeline.parameters.deploy_to_production >>
+          command: |
+            echo "Deploying to production environment"
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - lint
+      - yaml_lint:
+          requires:
+            - lint
+      - gitleaks:
+          requires:
+            - yaml_lint
+      - build:
+          requires:
+            - gitleaks
+      - checkov:
+          requires:
+            - build
+      - terraform:
+          requires:
+            - checkov
+      - docker:
+          requires:
+            - terraform
+      - deploy:
+          requires:
+            - docker

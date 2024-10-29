@@ -1,0 +1,142 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - staging
+  pull_request:
+    branches:
+      - main
+      - develop
+      - staging
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Lint workflow YAML files
+        uses: rhysd/actionlint@v1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint JavaScript code
+        run: npm run lint
+
+  build:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies and cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Check for vulnerabilities
+        run: npm audit --production
+
+  terraform:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
+
+      - name: Terraform init
+        run: terraform init
+        working-directory: infrastructure/
+
+      - name: Terraform plan
+        run: terraform plan
+        working-directory: infrastructure/
+
+      - name: Terraform apply (development)
+        if: github.ref == 'refs/heads/develop'
+        run: terraform apply -auto-approve
+        working-directory: infrastructure/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCES_KEY: ${{ secrets.AWS_SECRET_ACCES_KEY }}
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: terraform
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          region: us-east-1
+
+      - name: Build and tag Docker image
+        run: |
+          IMAGE_TAG=${{ github.sha }}
+          docker build -t ${{ secrets.ECR_REGISTRY }}/my-app:latest .
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Push Docker image to AWS ECR
+        run: |
+          IMAGE_TAG=${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.ECR_REGISTRY }}/my-app:$IMAGE_TAG
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: docker
+    environment: production
+    steps:
+      - name: Deploy to Development
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          echo "Deploying to development environment"
+          # Your deployment script here
+
+      - name: Deploy to Staging
+        if: github.ref == 'refs/heads/staging'
+        run: |
+          echo "Deploying to staging environment"
+          # Your deployment script here
+
+      - name: Manual Approval for Production
+        if: github.ref == 'refs/head/main'
+        uses: hmarr/auto-approve-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/main'
+          run: |
+          echo "Deploying to production environment"
+          # Your deployment script here
