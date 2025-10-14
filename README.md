@@ -32,10 +32,6 @@ This curated list covers the best resources, tutorials, and community content re
 - [CodeRabbit Startup Program](https://www.coderabbit.ai/blog/coderabbit-startup-program) - Special program for startups.
 - [AI Code Reviewer Examples](https://www.coderabbit.ai/blog/how-to-use-an-ai-code-reviewer-on-github-in-4-examples) - Four practical examples of using CodeRabbit.
 
-## API Reference
-
-- [OpenAPI Documentation](https://api.coderabbit.ai/api/swagger/) - Complete Swagger documentation for CodeRabbit's REST API endpoints.
-
 ## Configuration Examples
 
 ### Enterprise Configuration Example
