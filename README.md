@@ -138,3 +138,34 @@ configs/
 - [Plane](https://github.com/makeplane/plane) - Open-source project management tool [Example Review](https://github.com/makeplane/plane/pull/5933).
 - [Unkey](https://github.com/unkeyed/unkey) - API key management solution [Example Review](https://github.com/unkeyed/unkey/pull/2639).
 - [UploadThing](https://github.com/pingdotgg/uploadthing) - File upload solution for modern web [Example Review](https://github.com/pingdotgg/uploadthing/pull/1038).
+
+## Best Practices
+
+When using **CodeRabbit** for AI-powered code reviews, following a few best practices helps maximize accuracy, maintain consistency, and ensure high-quality feedback:
+
+1. **Provide Context in Pull Requests**  
+   Include clear PR titles and descriptions. Mention the purpose, scope, and any edge cases to help CodeRabbit generate relevant feedback.
+
+2. **Refine Configuration Regularly**  
+   - Use the `tone_instructions` and `path_instructions` fields to tailor reviews by code area.  
+   - Update your YAML configuration as your codebase evolves.  
+   - Keep `reviews.profile` consistent across repositories to maintain tone alignment.
+
+3. **Leverage Auto Reviews Wisely**  
+   Enable `auto_review` for major branches (`main`, `release`, etc.) only. Disable for WIP or experimental branches to reduce noise.
+
+4. **Combine AI + Human Insight**  
+   Use CodeRabbit’s feedback as a *first pass*. Developers should still review key logic and architecture changes manually.
+
+5. **Optimize for Performance & Security**  
+   Configure path-level rules to ensure sensitive files (e.g., `.env`, secrets) are excluded from reviews or uploads.
+
+6. **Integrate with CI/CD**  
+   Run CodeRabbit checks alongside your CI tests to automatically block merges if issues exceed a defined threshold.
+
+7. **Encourage Team Feedback**  
+   Collect feedback from developers on AI review accuracy and continuously refine configuration files for better alignment.
+
+8. **Document Custom Instructions**  
+   Maintain a central `CODE_REVIEW_GUIDE.md` documenting your preferred CodeRabbit settings, tone, and workflow for new team members.
+
