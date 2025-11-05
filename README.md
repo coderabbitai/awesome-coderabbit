@@ -34,7 +34,7 @@ This curated list covers the best resources, tutorials, and community content re
 
 ## API Reference
 
-- [OpenAPI Documentation](https://api.coderabbit.ai/api/swagger/) - Complete Swagger documentation for CodeRabbit's REST API endpoints.
+- [OpenAPI Documentation](https://docs.coderabbit.ai/api-reference/) - Complete Swagger documentation for CodeRabbit's REST API endpoints.
 
 ## Configuration Examples
 
