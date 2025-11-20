@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 # https://coderabbit.ai/docs/get-started/customize-coderabbit
 
 language: "ja"
