@@ -10,17 +10,16 @@ reviews:
   review_status: true
   collapse_walkthrough: false
   path_filters:
-    - "!**/.xml"
+    - "!**/*.xml"
   path_instructions:
     - path: "**/*.js"
       instructions: "Review the JavaScript code for conformity with the Google JavaScript style guide, highlighting any deviations."
     - path: "**/*.ts"
       instructions: |
-        "Review the JavaScript code for conformity with the Google JavaScript style guide, highlighting any deviations. Ensure that:
+        Review the JavaScript code for conformity with the Google JavaScript style guide, highlighting any deviations. Ensure that:
         - The code adheres to best practices associated with nodejs.
-        - The code adheres to best practices associated with nestjs framework.
         - The code adheres to best practices recommended for performance.
-        - The code adheres to similar naming conventions for controllers, models, services, methods, variables."
+        - The code adheres to similar naming conventions for controllers, models, services, methods, variables.
   auto_review:
     enabled: true
     ignore_title_keywords:
