@@ -1,0 +1,107 @@
+language: 'en'
+early_access: false
+
+version: 1
+
+review:
+  enabled: true
+  trigger: pull_request
+
+  # Files to review
+  paths:
+    - "**/*.kt"
+    - "**/*.kts"
+
+  # Excluded files and directories
+  exclude:
+    - "**/build/**"
+    - "**/.gradle/**"
+    - "**/out/**"
+    - "**/generated/**"
+    - "**/node_modules/**"
+    - "**/*.md"
+    - "**/*.txt"
+
+  # Branch rules
+  branches:
+    exclude:
+      - "dependabot/**"
+
+  # Review behavior
+  behavior:
+    # Keep feedback concise and actionable
+    tone: professional
+    verbosity: balanced
+
+    # Avoid nitpicking on trivial formatting
+    ignore_trivial_changes: true
+
+    # Prefer inline suggestions when possible
+    inline_comments: true
+
+    # Do not repeat the same comment multiple times
+    deduplicate_comments: true
+
+checks:
+  # Kotlin-specific best practices
+  kotlin:
+    enabled: true
+
+    # Language correctness
+    null_safety: true
+    immutability: true
+    data_class_usage: true
+    sealed_class_usage: true
+
+    # Code quality
+    complexity:
+      enabled: true
+      max_cyclomatic_complexity: 10
+
+    # Coroutines and concurrency
+    coroutines:
+      enabled: true
+      structured_concurrency: true
+      dispatcher_misuse: true
+
+    # Performance considerations
+    performance:
+      avoid_unnecessary_allocations: true
+      collection_usage: true
+
+    # API and design
+    api_design:
+      visibility_modifiers: true
+      unnecessary_public_api: true
+
+    # Error handling
+    error_handling:
+      unchecked_exceptions: true
+      result_usage: true
+
+  # Security checks (lightweight, non-intrusive)
+  security:
+    enabled: true
+    hardcoded_secrets: true
+    insecure_random: true
+    unsafe_deserialization: true
+
+  # General best practices
+  general:
+    dead_code: true
+    unused_imports: true
+    naming_conventions: true
+    documentation_mismatch: true
+
+comments:
+  # Encourage explanations for non-obvious logic
+  require_reasoning_for_complex_logic: true
+
+  # Avoid commenting on obvious or self-explanatory code
+  skip_obvious_code: true
+
+summary:
+  enabled: true
+  include_strengths: true
+  include_risks: true
+  include_recommendations: true
