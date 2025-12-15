@@ -16,8 +16,8 @@ reviews:
       instructions: "Review the JavaScript code for conformity with the Google JavaScript style guide, highlighting any deviations."
     - path: "**/*.ts"
       instructions: |
-        Review the JavaScript code for conformity with the Google JavaScript style guide, highlighting any deviations. Ensure that:
-        - The code adheres to best practices associated with nodejs.
+        Review the TypeScript code for conformity with best practices, highlighting any deviations. Ensure that:
+        - The code adheres to best practices associated with Node.js.
         - The code adheres to best practices recommended for performance.
         - The code adheres to similar naming conventions for controllers, models, services, methods, variables.
   auto_review:
@@ -28,11 +28,7 @@ reviews:
     drafts: false
     base_branches:
       - "master"
-      - "dev"
-      - "feat/*"
-      - "feat-*"
-      - "release-*"
-      - "Shiksha-2.0"
+      - "main"
 
 chat:
   auto_reply: true
