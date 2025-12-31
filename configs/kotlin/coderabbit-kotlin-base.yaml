@@ -1,107 +1,89 @@
-language: 'en'
+language: en
 early_access: false
 
-version: 1
+reviews:
+  profile: chill
+  high_level_summary: true
+  collapse_walkthrough: true
+  poem: false
 
-review:
-  enabled: true
-  trigger: pull_request
-
-  # Files to review
-  paths:
+  # Files to review (use ! prefix to exclude)
+  path_filters:
     - "**/*.kt"
     - "**/*.kts"
+    - "!**/build/**"
+    - "!**/.gradle/**"
+    - "!**/out/**"
+    - "!**/generated/**"
+    - "!**/node_modules/**"
+    - "!**/*.md"
+    - "!**/*.txt"
 
-  # Excluded files and directories
-  exclude:
-    - "**/build/**"
-    - "**/.gradle/**"
-    - "**/out/**"
-    - "**/generated/**"
-    - "**/node_modules/**"
-    - "**/*.md"
-    - "**/*.txt"
-
-  # Branch rules
-  branches:
-    exclude:
-      - "dependabot/**"
-
-  # Review behavior
-  behavior:
-    # Keep feedback concise and actionable
-    tone: professional
-    verbosity: balanced
-
-    # Avoid nitpicking on trivial formatting
-    ignore_trivial_changes: true
-
-    # Prefer inline suggestions when possible
-    inline_comments: true
-
-    # Do not repeat the same comment multiple times
-    deduplicate_comments: true
-
-checks:
-  # Kotlin-specific best practices
-  kotlin:
+  auto_review:
     enabled: true
+    auto_incremental_review: true
+    drafts: false
+    # Ignore dependabot PRs
+    ignore_usernames:
+      - dependabot
+      - "dependabot[bot]"
 
-    # Language correctness
-    null_safety: true
-    immutability: true
-    data_class_usage: true
-    sealed_class_usage: true
+  path_instructions:
+    - path: "**/*.kt"
+      instructions: |
+        Kotlin best practices to check:
 
-    # Code quality
-    complexity:
+        Language correctness:
+        - Null safety: Ensure proper use of nullable types, avoid unnecessary null assertions (!!)
+        - Immutability: Prefer val over var, use immutable collections where possible
+        - Data class usage: Use data classes for DTOs and value objects
+        - Sealed class usage: Use sealed classes for representing restricted hierarchies
+
+        Code quality:
+        - Complexity: Flag functions with high cyclomatic complexity (>10)
+        - Dead code: Identify unused functions, variables, and imports
+        - Naming conventions: Follow Kotlin naming conventions (camelCase for functions/properties, PascalCase for classes)
+
+        Coroutines and concurrency:
+        - Structured concurrency: Ensure proper coroutine scope usage
+        - Dispatcher misuse: Check for correct dispatcher usage (IO for blocking, Default for CPU-intensive)
+
+        Performance:
+        - Avoid unnecessary allocations in hot paths
+        - Collection usage: Use appropriate collection types and operations (prefer sequences for large collections with multiple operations)
+
+        API and design:
+        - Visibility modifiers: Use appropriate visibility (prefer private/internal over public)
+        - Unnecessary public API: Flag overly exposed APIs
+
+        Error handling:
+        - Proper exception handling, avoid swallowing exceptions
+        - Result usage: Consider using Result type for operations that can fail
+
+        Security:
+        - No hardcoded secrets or credentials
+        - Use SecureRandom instead of Random for security-sensitive operations
+        - Avoid unsafe deserialization
+    - path: "**/*.kts"
+      instructions: |
+        Kotlin script best practices to check:
+
+        Language correctness:
+        - Null safety: Ensure proper use of nullable types, avoid unnecessary null assertions (!!)
+        - Immutability: Prefer val over var, use immutable collections where possible
+
+        Code quality:
+        - Complexity: Flag overly complex scripts
+        - Naming conventions: Follow Kotlin naming conventions
+
+        Security:
+        - No hardcoded secrets or credentials
+
+  # Kotlin-specific linting via detekt
+  tools:
+    detekt:
       enabled: true
-      max_cyclomatic_complexity: 10
 
-    # Coroutines and concurrency
-    coroutines:
+    # Security scanning
+    gitleaks:
       enabled: true
-      structured_concurrency: true
-      dispatcher_misuse: true
-
-    # Performance considerations
-    performance:
-      avoid_unnecessary_allocations: true
-      collection_usage: true
-
-    # API and design
-    api_design:
-      visibility_modifiers: true
-      unnecessary_public_api: true
-
-    # Error handling
-    error_handling:
-      unchecked_exceptions: true
-      result_usage: true
-
-  # Security checks (lightweight, non-intrusive)
-  security:
-    enabled: true
-    hardcoded_secrets: true
-    insecure_random: true
-    unsafe_deserialization: true
-
-  # General best practices
-  general:
-    dead_code: true
-    unused_imports: true
-    naming_conventions: true
-    documentation_mismatch: true
-
-comments:
-  # Encourage explanations for non-obvious logic
-  require_reasoning_for_complex_logic: true
-
-  # Avoid commenting on obvious or self-explanatory code
-  skip_obvious_code: true
-
-summary:
-  enabled: true
-  include_strengths: true
-  include_risks: true
-  include_recommendations: true
