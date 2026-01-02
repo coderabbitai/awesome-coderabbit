@@ -1,8 +1,13 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 language: en
 early_access: false
 
 reviews:
-  profile: chill
+  # Profile options:
+  # - "chill": Focuses on significant issues, less nitpicky about style
+  # - "assertive": More thorough, flags style issues and minor improvements too
+  # Choose "chill" for experienced teams, "assertive" for stricter code standards
+  profile: assertive
   high_level_summary: true
   collapse_walkthrough: true
   poem: false
@@ -64,6 +69,7 @@ reviews:
         - No hardcoded secrets or credentials
         - Use SecureRandom instead of Random for security-sensitive operations
         - Avoid unsafe deserialization
+
     - path: "**/*.kts"
       instructions: |
         Kotlin script best practices to check:
@@ -79,10 +85,31 @@ reviews:
         Security:
         - No hardcoded secrets or credentials
 
+    - path: "**/*Test*.kt"
+      instructions: |
+        Test-specific best practices:
+        - Use descriptive test names that explain scenario and expected outcome
+        - Follow Arrange-Act-Assert pattern
+        - Each test should verify one logical concept
+        - Focus on behavior, not implementation details
+        - Ensure proper test isolation (no shared mutable state)
+        - Test edge cases: nulls, empty collections, boundary conditions
+        - Use assertThrows for exception scenarios
+
+    - path: "**/build.gradle.kts"
+      instructions: |
+        Review for:
+        - Deprecated jcenter() repository (sunset in 2022, use mavenCentral)
+        - Outdated dependency versions with known vulnerabilities
+        - Hardcoded versions vs version catalogs
+        - Deprecated Gradle APIs
+
   # Kotlin-specific linting via detekt
   tools:
     detekt:
       enabled: true
+      # Uncomment if you have a custom detekt.yml in your repo
+      # config_file: "detekt.yml"
 
     # Security scanning
     gitleaks:
