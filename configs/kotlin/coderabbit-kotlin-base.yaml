@@ -7,7 +7,7 @@ reviews:
   # - "chill": Focuses on significant issues, less nitpicky about style
   # - "assertive": More thorough, flags style issues and minor improvements too
   # Choose "chill" for experienced teams, "assertive" for stricter code standards
-  profile: assertive
+  profile: chill
   high_level_summary: true
   collapse_walkthrough: true
   poem: false
