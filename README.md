@@ -136,5 +136,6 @@ configs/
 - [Permify](https://github.com/Permify/permify) - Authorization service & policy engine [Example Review](https://github.com/Permify/permify/pull/1754).
 - [Pipedream](https://github.com/PipedreamHQ/pipedream) - Connect APIs, remarkably fast [Example Review](https://github.com/PipedreamHQ/pipedream/pull/14498).
 - [Plane](https://github.com/makeplane/plane) - Open-source project management tool [Example Review](https://github.com/makeplane/plane/pull/5933).
+- [Scalekit](https://github.com/scalekit-inc/developer-docs) - AuthStack for AI apps [Example Review](https://github.com/scalekit-inc/developer-docs/pull/423)
 - [Unkey](https://github.com/unkeyed/unkey) - API key management solution [Example Review](https://github.com/unkeyed/unkey/pull/2639).
 - [UploadThing](https://github.com/pingdotgg/uploadthing) - File upload solution for modern web [Example Review](https://github.com/pingdotgg/uploadthing/pull/1038).
