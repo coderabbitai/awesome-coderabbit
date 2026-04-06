@@ -4,6 +4,7 @@
 
 This curated list covers the best resources, tutorials, and community content related to CodeRabbit 🐰
 
+- [guardian-agent-prompts](https://github.com/milkomida77/guardian-agent-prompts) - 49 production-tested AI agent system prompts including code review agents for Claude Code multi-agent orchestration. MIT licensed.
 ## Contents
 
 - [Official Resources](#official-resources)
