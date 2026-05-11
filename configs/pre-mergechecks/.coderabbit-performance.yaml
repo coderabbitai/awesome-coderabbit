@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "Runtime Efficiency and Scaling Review"
+        mode: "error"
+        instructions: >-
+          Review changed code for material performance regressions. Flag O(n²) or worse behavior in any path that processes non-trivially sized input, including request handlers, background jobs, rendering paths, and collection iteration. Flag N+1 query patterns—database or external service calls inside a loop that should be batched, joined, or preloaded. Flag repeated recomputation of deterministic values inside loops where caching, memoization, or pre-computation outside the loop would eliminate redundant work. Flag inefficient data structure choices such as linear-search arrays for membership checks where a hash set is appropriate. Flag unbounded data accumulation, missing pagination, or caches without eviction. Flag expensive synchronous work (compression, hashing, template rendering) in hot paths where it should be deferred or sampled. Report only issues that could materially degrade latency, throughput, or resource usage at realistic input sizes—ignore micro-optimizations and speculative concerns.

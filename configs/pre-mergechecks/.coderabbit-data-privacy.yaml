@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "Pipeline Integrity Validation"
+        mode: "warning"
+        instructions: >-
+          When new data pipelines are introduced to the repository, verify that the pipeline includes data quality validation. Check for any of the following indicators: a dedicated data quality checks configuration file, use of a data quality framework library in the pipeline's dependencies, data quality assertion calls in pipeline code, or a sibling data quality pipeline in the same directory. If none are found, warn that the new pipeline should include data quality checks and point to existing examples in the codebase. Pass when the pipeline includes any data quality validation, or when the PR is modifying an existing pipeline rather than introducing a new one.
+
+      - name: "Deployment-Ready Config Verification"
+        mode: "error"
+        instructions: >-
+          When production configuration files are modified, review all new or modified values in those files. Fail if any value contains a placeholder such as `TBD`, `PLACEHOLDER`, `TODO`, `REPLACE_ME`, or an empty string where a real value is required. Fail if required identifiers (workflow IDs, service endpoints, ARNs, connection strings) are not populated with real values. Fail if configuration key names are inconsistent across environments (the same logical setting using different key names in staging vs. production). Pass only when all production configuration values are real, consistent, and deployment-ready.

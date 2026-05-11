@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "Backward Compatibility Impact Disclosure"
+        mode: "error"
+        instructions: >-
+          Review the PR for breaking changes to public interfaces: removed or renamed exported functions, types, or components; required fields added to existing request or response models (callers without the new field will fail); narrowed parameter types; changed default values that alter existing behavior; removed environment variables or configuration keys; changed event or message schemas. If any breaking change is detected, verify that: the PR description includes a "Breaking Changes" section listing each change with a migration path; the changelog is updated under an appropriate heading; and the version bump (if applicable) reflects a major version increment. Fail if breaking changes exist without documentation. Pass when all breaking changes are explicitly documented and versioned.
+
+      - name: "Architectural Decision Justification"
+        mode: "warning"
+        instructions: >-
+          When a PR introduces a significant change—a new service, major architectural shift, new data model, or a change that affects multiple teams—verify that the PR description references a design or requirements document. If no document is linked and the change is material, verify that the PR description includes a clear written justification for why a design document is not required. Flag any significant change with neither a design document link nor an exemption rationale. Pass when a design document is referenced or the exemption is explicitly documented.
+
+      - name: "Docs-to-Code Alignment"
+        mode: "error"
+        instructions: >-
+          When code changes make existing documentation stale—by changing CLI commands, configuration options, public API signatures, or user-facing behavior—verify that the relevant documentation files are updated in the same PR. Fail if documentation is demonstrably out of date with the code after this change merges. Pass when either no documentation is affected or all affected documentation has been updated.
