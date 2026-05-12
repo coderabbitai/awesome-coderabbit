@@ -16,8 +16,7 @@ reviews:
       - name: "Direct Module Import Enforcement"
         mode: "error"
         instructions: >-
-          When TypeScript or JavaScript files are modified, review all new import statements in `.ts` and `.tsx` files. Fail if any import pulls from a barrel re-export file that aggregates multiple unrelated modules (e.g., an `index.ts` re-exporting dozens of unrelated components or hooks). Third-party package imports are always allowed. For local imports, flag multi-named imports from a single local path that aggregates unrelated modules and require them to be replaced with direct module paths. Fail if any new `index.ts` re-exports modules from multiple unrelated sibling folders. Pass when all local imports use direct paths to the specific module being consumed.
-
+          When TypeScript or JavaScript files are modified, review all new import statements in `.ts`, `.tsx`, `.js`, and `.jsx` files. Fail if any import pulls from a barrel re-export file that aggregates multiple unrelated modules (e.g., an `index.ts` re-exporting dozens of unrelated components or hooks). Third-party package imports are always allowed. For local imports, flag multi-named imports from a single local path that aggregates unrelated modules and require them to be replaced with direct module paths. Fail if any new `index.ts` re-exports modules from multiple unrelated sibling folders. Pass when all local imports use direct paths to the specific module being consumed.
       - name: "Failure Path Robustness Review"
         mode: "warning"
         instructions: >-
