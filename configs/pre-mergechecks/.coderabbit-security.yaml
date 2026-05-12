@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "Query Parameterization Enforcement"
+        mode: "error"
+        instructions: >-
+          Review all new or modified database query construction. Fail if any query is built by concatenating or interpolating user-supplied input directly into a SQL string. Use parameterized queries or prepared statements with placeholders for all external values. Reuse prepared statements for repeated queries rather than rebuilding them per call. Flag any string-building approach to query construction and require it to be replaced with parameterized equivalents before merging.
+
+      - name: "Sensitive Output Leak Prevention"
+        mode: "error"
+        instructions: >-
+          Review all new or modified log statements and direct output writes (`logger.*`, `console.log`, `print`, `fmt.Println`, `System.out.println`, and equivalent). Fail if any log message includes passwords, secrets, or API keys; PII such as names, SSNs, dates of birth, email addresses, or phone numbers; or payment card data. Fail for any log statement using string concatenation or interpolation to build the message instead of parameterized structured logging. Fail if exceptions or stack traces are logged at INFO or WARN level (they must use ERROR or above). Fail if normal successful operations are logged at ERROR level. If sensitive data must appear in any observable output, it must be masked before logging. Pass when logs are structured, use appropriate severity levels, and contain no sensitive data in plaintext.
+
+      - name: "Top Vulnerability Pattern Audit"
+        mode: "warning"
+        instructions: >-
+          Review all changed code against the OWASP Top 10 for Web (2021) and API Security (2023). Flag broken access control (missing authorization checks, insecure direct object references, privilege escalation paths); cryptographic failures (hardcoded secrets, weak algorithms such as MD5/SHA1/DES, unencrypted sensitive data in transit or at rest); injection vulnerabilities (SQL, NoSQL, OS command, or expression-language injection via unsanitized input); security misconfiguration (default credentials, verbose error messages exposing stack traces, permissive IAM policies); vulnerable or outdated components with published CVEs; identification and authentication failures (weak session management, improper token validation); and SSRF (user-controlled URLs passed to server-side HTTP requests without allowlisting). For API endpoints, additionally flag broken object-level authorization, unrestricted resource consumption without rate limiting or pagination, and over-fetching of sensitive fields in responses. Post each finding as a comment on the affected line with a brief remediation note.
+
+      - name: "Dependency Risk Assessment"
+        mode: "warning"
+        instructions: >-
+          When dependency manifests (package.json, pom.xml, requirements.txt, go.mod, Gemfile, etc.) are modified, review newly added or upgraded third-party libraries. Flag any dependency with known security vulnerabilities in public advisory databases. Flag libraries with non-permissive licenses (e.g., AGPL, GPL) when the project requires permissive licenses (e.g., MIT, Apache 2.0). Pay particular attention to libraries that handle authentication, payments, healthcare data, or cryptography. Require explicit justification in the PR description for any dependency that introduces significant legal or security risk.
+
+      - name: "Personal Data Exposure Guard"
+        mode: "error"
+        instructions: >-
+          Review all changed code for improper handling of Personally Identifiable Information (PII) and other sensitive personal data (including Protected Health Information in healthcare contexts). Fail if PII fields (names, email addresses, phone numbers, dates of birth, government IDs, addresses, income, medical record numbers, diagnoses) are transmitted to logs, analytics pipelines, third-party services, or API responses without authorization. Verify that database queries select only the minimum fields necessary for the operation. Flag API responses that use denylists rather than allowlists to filter sensitive fields—allowlists are required to prevent accidental over-exposure. Verify that data masking is applied server-side, never delegated to the client. Fail if any data pathway could expose User A's PII to User B.

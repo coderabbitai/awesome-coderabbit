@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "Module Cohesion and Naming Clarity"
+        mode: "warning"
+        instructions: >-
+          Review packages, classes, functions, and methods for adherence to the Single Responsibility Principle. Flag any module or package that accumulates unrelated concerns. Flag classes or structs with more than approximately seven top-level fields as candidates for decomposition. Flag functions that operate across multiple levels of abstraction or handle more than one distinct concern. Flag generic, context-free names such as `Manager`, `Handler`, `Util`, `Process`, or `Do`—names should clearly communicate a single specific concept relative to their context. Flag methods with more than four or five parameters, which often signals that a parameter object or further abstraction is warranted. Pass when each unit has one clear purpose and names communicate that purpose unambiguously.
+
+      - name: "Public API Contract Consistency"
+        mode: "warning"
+        instructions: >-
+          Review any changes to exported or public method and function signatures. Flag additions, removals, or reordering of parameters; type changes (including adding or removing optionality); return type changes; and visibility changes (e.g., making a public method private). When a signature change is detected, verify that all call sites have been updated in the same PR. Also flag file renames or directory moves that change import paths without updating all consumer imports. Pass when no caller references an outdated signature or stale import path.
+
+      - name: "Direct Module Import Enforcement"
+        mode: "error"
+        instructions: >-
+          When TypeScript or JavaScript files are modified, review all new import statements in `.ts`, `.tsx`, `.js`, and `.jsx` files. Fail if any import pulls from a barrel re-export file that aggregates multiple unrelated modules (e.g., an `index.ts` re-exporting dozens of unrelated components or hooks). Third-party package imports are always allowed. For local imports, flag multi-named imports from a single local path that aggregates unrelated modules and require them to be replaced with direct module paths. Fail if any new `index.ts` re-exports modules from multiple unrelated sibling folders. Pass when all local imports use direct paths to the specific module being consumed.
+      - name: "Failure Path Robustness Review"
+        mode: "warning"
+        instructions: >-
+          Review error handling patterns in new and modified code. Flag returned errors silently discarded (e.g., assigned to `_`) without an inline justification. Flag error matching based on string comparison of error messages—prefer stable error codes or typed error classes. Flag accesses to `error.message` without null or optional-chaining protection. Flag catch blocks that log only a message string instead of the full error object or stack trace. Flag top-level async entry points (bootstrap scripts, job runners) that lack a `.catch()` or `try/catch` that logs the error and exits the process with a non-zero code. Pass when errors are handled with stable codes, logged with full context, and entry points cannot swallow failures silently.
+
+      - name: "Commit Message Format Compliance"
+        mode: "warning"
+        instructions: >-
+          Review all commit messages in the PR for Conventional Commits compliance. Each message must start with a type (`feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, `perf`, or similar), followed by an optional parenthetical scope, an optional `!` to signal a breaking change, a colon, a space, and a short description. Use `feat` for new features and `fix` for bug fixes. If a scope is provided, the commit must only affect code within that scope. A longer body may follow the short description, separated by a blank line. Flag any commit message that does not conform to this structure.

@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "IaC Template Version Integrity"
+        mode: "error"
+        instructions: >-
+          When infrastructure-as-code templates (CloudFormation, Terraform modules, Chef cookbooks, Helm charts, Ansible roles) are modified, and functional sections of an IaC template are changed (resources, parameters, outputs, recipes, tasks, or equivalent—not comments or metadata-only fields), the template's version identifier must be incremented. Verify that the version field exists in the modified template and that its value has changed compared to the base branch. Fail if functional changes are present but the version is unchanged. Pass when the version is incremented for any functional change, or when only comments or documentation are modified.
+
+      - name: "Chart Dependency Lock Consistency"
+        mode: "warning"
+        instructions: >-
+          When Helm Chart.yaml files are modified and a `Chart.yaml` dependency version is changed, verify that the corresponding `Chart.lock` file is also updated in the same PR. If no `Chart.lock` file exists, skip this check. A stale lock file means declared dependencies and locked dependencies are out of sync, producing unpredictable results during `helm install` or `helm upgrade`. Instruct the author to run `helm dependency update <chart-directory>` and commit the resulting lock file. Pass when `Chart.yaml` and `Chart.lock` reflect the same dependency versions.
+
+      - name: "User Interaction Tracking Coverage"
+        mode: "warning"
+        instructions: >-
+          Review new user-facing features, screens, and interactive flows for the presence of analytics event instrumentation. Flag any new screen, modal, sheet, or multi-step flow with no analytics capture calls. Flag analytics events fired with empty or minimal payloads lacking contextual metadata useful for analysis (entity IDs, flow step, error codes, action type). Flag new event names used in capture calls that are not registered in the project's analytics event type definitions. Pass when new user-facing features include instrumentation, or when the PR description explicitly documents that instrumentation will be added in a follow-up with a linked ticket.
+
+      - name: "UI Accessibility Regression Check"
+        mode: "warning"
+        instructions: >-
+          When UI component files are modified, review new and modified UI components for clear accessibility regressions. Flag decorative images (icons, backgrounds, logos) that lack an attribute marking them as presentational (e.g., `aria-hidden`, `alt=""`). Flag interactive elements (buttons, links, inputs) that lack an accessible name—either a visible label, `aria-label`, or `aria-labelledby` reference. Flag heading elements used out of document order (e.g., `h3` immediately following `h1` with no `h2`). Flag duplicate `id` attributes within the same document. Do not flag minor styling changes or content-only edits. Pass when no clear accessibility regressions are introduced.
+
+      - name: "Debug Output Removal Enforcement"
+        mode: "error"
+        instructions: >-
+          When application source files are modified, review all modified application source files (e.g., in `src/`, `lib/`, `app/`, or `packages/*/src/`) for debug output statements such as `console.log`, `console.error`, `console.warn`, `print`, or equivalent. Fail if any such statement is found in production-destined source code. Exclude test files, fixture files, generated code, build artifacts, and local tooling scripts. Pass when no debug console statements are present in application source.

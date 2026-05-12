@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "New Logic Test Adequacy"
+        mode: "warning"
+        instructions: >-
+          Review the PR for new or modified source code that lacks corresponding test coverage. Flag new functions, methods, and classes that have no unit tests—especially pure functions where testing is straightforward. Flag bug fixes without a regression test that fails without the fix. Flag new error-throwing paths that have no test asserting the error is raised correctly. Flag test factories or fixtures that were not updated when the corresponding entity gained new required fields. Do not flag trivial changes (renaming, formatting, comments), generated code, or refactors fully covered by existing tests. Pass when new logic has proportionate test coverage across happy paths, error paths, and edge cases.
+
+      - name: "Test Hygiene and Isolation"
+        mode: "warning"
+        instructions: >-
+          Review new and modified test code for structural quality. Flag tests that assert multiple unrelated behaviors in a single test case—each test should validate one specific behavior. Flag tests that create resources without a corresponding teardown, especially resources with global scope. Flag async operations or external interactions that lack explicit timeout bounds. Flag assertions that have no descriptive failure message—include a message so failures are self-explanatory without reading source code. Flag tests that duplicate logic already covered by lower-level unit tests; high-level tests should verify calls and outcomes, not re-implement algorithm assertions. Pass when tests are focused, self-cleaning, bounded, and produce clear failure messages.
+
+      - name: "Validation Evidence for Impactful PRs"
+        mode: "warning"
+        instructions: >-
+          When a PR introduces significant changes (new features, breaking changes, substantial refactoring, or algorithmic modifications), verify that the PR description includes evidence of testing. For changes that could affect numerical accuracy or convergence, require before-and-after results demonstrating no regression. For performance-affecting changes, require before-and-after benchmark numbers along with the configuration and context in which they were measured. Pass when changes are minor or when test evidence is documented. Flag when material changes are introduced with no validation evidence in the description.
