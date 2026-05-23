@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "cleanup stale imports"
+        instructions: |
+          Remove unused imports only in files changed by this PR. Preserve
+          type-only imports, side-effect imports, CSS imports, and any import
+          still required by the project's compiler, typechecker, linter, or
+          build tooling. Do not reorder, regroup, or reformat imports. Delete
+          only imports that the repo's existing tooling proves are unused. If
+          no authoritative unused-import signal exists for a file, leave it
+          unchanged.

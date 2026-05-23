@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "regenerate orm types"
+        instructions: |
+          When this PR changes database schema through migrations or schema
+          files, run the repository's existing ORM or query type generation
+          command, such as prisma generate, sqlc generate, or the
+          repo-defined equivalent, and commit only the generated artifacts
+          that are already tracked or normally committed in this repository.
+          Do not hand-edit generated files. If no authoritative generation
+          command is defined, report that regeneration could not be
+          performed.

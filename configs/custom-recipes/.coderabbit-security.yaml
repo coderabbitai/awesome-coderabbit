@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "scrub hardcoded secrets"
+        instructions: |
+          Detect high-confidence hardcoded secrets introduced or modified in
+          this PR, including API keys, tokens, signing keys, passwords, and
+          connection strings. Replace each real secret with the repository's
+          normal environment/config lookup pattern, using names that match
+          existing conventions. Add the variable to .env.example with a
+          placeholder, and update existing env documentation if the repo
+          maintains it. Never preserve or re-emit the real secret value
+          anywhere. Skip obvious placeholders, test fixtures, mock
+          credentials, and documentation examples (such as "YOUR_API_KEY",
+          "changeme", "test-token", or values inside README/docs snippets)
+          unless they appear to be real credentials. If confidence is not
+          high, report the finding instead of rewriting. In the PR summary,
+          note that any real secret already committed must be revoked and
+          rotated outside the PR.

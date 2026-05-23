@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "associate form labels"
+        instructions: |
+          For newly added or modified form controls in this PR, ensure each
+          visible input, textarea, and select has an accessible name through
+          a correctly associated <label>, wrapping label, aria-label, or
+          aria-labelledby, whichever matches the existing component pattern.
+          If using htmlFor, add a stable id only when missing and follow the
+          repo's naming pattern. Add aria-describedby when nearby help text
+          or error text is rendered. Do not add redundant labels to hidden
+          inputs or controls already correctly labeled through grouped
+          patterns such as fieldset and legend.
