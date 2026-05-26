@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "update import paths after file moves"
+        instructions: |
+          When files are moved or renamed in this PR, update broken import
+          and export specifiers that reference the old paths across changed
+          files and directly affected dependents. Prefer the repository's
+          existing path alias conventions when the new location is normally
+          imported that way; otherwise preserve the prevailing local import
+          style. Update re-export barrels when needed. Do not rewrite
+          unrelated paths, plain strings, or documentation text unless they
+          are clearly part of a moved-code reference that this PR already
+          touches.

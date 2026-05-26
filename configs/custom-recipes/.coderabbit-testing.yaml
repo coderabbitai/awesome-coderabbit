@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "sync tests with signature changes"
+        instructions: |
+          When a function changed in this PR has a signature change in
+          parameters or return shape, update directly affected test files so
+          their call sites, mocks, fixtures, expected values, and type
+          assertions match the new signature. Preserve each test's original
+          intent and behavioral assertion. Do not broaden test edits beyond
+          directly affected tests. Do not rewrite assertions to fit a
+          semantic behavior change unless the production diff clearly shows
+          the behavior is unchanged and only the interface changed; otherwise
+          report that the tests need human review.

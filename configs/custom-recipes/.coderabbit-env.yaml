@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "propagate new env var"
+        instructions: |
+          When this PR introduces a new environment variable read such as
+          process.env.X or the language-equivalent pattern, propagate X to the
+          repository's existing configuration surfaces where applicable:
+          .env.example, config schema or validator, documented env tables,
+          compose or deployment manifests, and CI config or secret lists that
+          already exist in the repo. Match the repo's existing naming and
+          classification conventions. If X is sensitive, add only a
+          placeholder and wire it through existing secret/config surfaces
+          without exposing a value. Use a placeholder value with a short
+          comment describing the var's purpose where the existing files
+          include comments. Do not create new infra files. Do not edit
+          generated documentation or derived config artifacts by hand; update
+          the source of truth or report the missing propagation path.

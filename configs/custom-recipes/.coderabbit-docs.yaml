@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "document new public APIs"
+        instructions: |
+          For functions, classes, and types newly exported by this PR from a
+          package's public surface, add or improve docstrings following the
+          repository's existing documentation style. Cover purpose,
+          parameters, return value when applicable, and one short usage
+          example. Skip internal-only exports, local helpers, and symbols not
+          exposed through the package's public entry points or declared
+          export barrels. If the repo has no established inline API-doc
+          convention, report the missing documentation rather than inventing
+          a new style.

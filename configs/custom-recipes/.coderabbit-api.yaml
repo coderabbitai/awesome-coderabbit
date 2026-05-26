@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "regenerate openapi/graphql schema"
+        instructions: |
+          When this PR changes route handlers, request or response contracts,
+          GraphQL schema inputs, resolvers, or other API-surface definitions
+          that normally drive generated specs, run the repository's existing
+          OpenAPI, GraphQL, or contract-generation command and commit the
+          generated output. Do not hand-edit generated schema or spec files.
+          If the spec is generated in another repository or pipeline, update
+          the source of truth here and report the handoff rather than
+          editing downstream generated artifacts manually. If no generation
+          command can be found, report that the repository is missing an
+          explicit schema regeneration workflow.
