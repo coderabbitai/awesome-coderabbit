@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+tone_instructions: Prefer concise responses (high information density, low fluff)
+inheritance: true
+
+reviews:
+  profile: chill
+  request_changes_workflow: false
+  disable_cache: true
+  collapse_walkthrough: true
+  changed_files_summary: false
+  sequence_diagrams: true
+  estimate_code_review_effort: false
+  auto_apply_labels: false
+  suggested_reviewers: false
+  in_progress_fortune: false
+  poem: true
+
+  high_level_summary: true
+  high_level_summary_instructions: "Give a brief description of the changes in 50 words or less."
+  high_level_summary_in_walkthrough: false
+
+  path_instructions:
+    - path: '**/*'
+      instructions: >
+        - Keep reviews short: flag only issues that make the PR unsafe to merge.
+        - Group similar issues into a single comment instead of posting multiple
+          notes.
+        - Skip repetition — if a pattern repeats, mention it once at a summary
+          level only.
+        - If there are no critical problems, respond with minimal approval
+          (e.g., 'Looks good'). Do not add additional review.
+  auto_review:
+    auto_incremental_review: true
+  finishing_touches:
+    docstrings:
+      enabled: false
+    unit_tests:
+      enabled: false
+
+knowledge_base:
+  issues:
+    scope: local
+  pull_requests:
+    scope: local
