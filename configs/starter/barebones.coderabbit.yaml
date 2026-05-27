@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+inheritance: true
+
+reviews:
+  disable_cache: true
+  high_level_summary: false
+  review_status: false
+  changed_files_summary: false
+  suggested_reviewers: false
+  estimate_code_review_effort: false
+  in_progress_fortune: false
+  poem: false
+  path_instructions:
+    - path: '**/*'
+      instructions: >
+        - Only comment on issues that would block merging — ignore minor or stylistic concerns.
+
+        - Restrict feedback to errors, security risks, or functionality-breaking problems.
+
+        - Do not post comments on code style, formatting, or non-critical
+          improvements.
+        - Keep reviews short: flag only issues that make the PR unsafe to merge.
+
+        - Limit review comments to 3–5 items maximum, unless additional blockers
+          exist.
+        - Group similar issues into a single comment instead of posting multiple
+          notes.
+        - Skip repetition — if a pattern repeats, mention it once at a summary
+          level only.
+        - Do not add general suggestions, focus strictly on merge-blocking
+          concerns.
+        - If there are no critical problems, respond with minimal approval
+          (e.g., 'Looks good'). Do not add additional review.
+        - Avoid line-by-line commentary unless it highlights a critical bug or security hole.
+
+        - Highlight only issues that could cause runtime errors, data loss, or severe
+        maintainability issues.
+
+        - Ignore minor optimization opportunities — focus solely on correctness and safety.
+
+        - Provide a top-level summary of critical blockers rather than detailed per-line notes.
+
+        - Comment only when the issue must be resolved before merge — otherwise remain silent.
+
+        - When in doubt, err on the side of fewer comments — brevity and
+          blocking issues only.
+        - Avoid posting any refactoring issues
+  auto_review:
+    auto_incremental_review: false
+  finishing_touches:
+    docstrings:
+      enabled: false
+    unit_tests:
+      enabled: false
+  pre_merge_checks:
+    docstrings:
+      mode: 'off'
+    title:
+      mode: 'off'
+    description:
+      mode: 'off'
+    issue_assessment:
+      mode: 'off'
+chat:
+  art: false
