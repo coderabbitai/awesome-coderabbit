@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  finishing_touches:
+    custom:
+      - name: "Confidence Rating"
+        instructions: |
+          Rate the confidence of this change using the following scale and
+          include it in your review summary:
+
+          5/5 — Ship it: Trivial or purely additive change with no risk to
+          existing behavior. Examples: copy/config changes, new code behind
+          a feature flag, test-only changes, additive schema changes with
+          safe defaults, documentation updates.
+
+          4/5 — Confident: Straightforward change with clear intent. Touches
+          existing code paths but the scope is well-contained and tests
+          cover the affected behavior.
+
+          3/5 — Cautious: Moderate risk. Changes touch shared code, have
+          incomplete test coverage, or alter behavior in ways that could
+          have subtle downstream effects. Warrants careful human review.
+
+          2/5 — Concerned: High risk. Broad changes to critical paths
+          (payments, auth, data integrity, infrastructure), missing tests
+          for important cases, complex logic changes, or destructive
+          operations (database migrations that lock tables, resource
+          replacements in IaC, removing public API surface).
+
+          1/5 — Dangerous: Very high risk of breakage. Deleting or
+          rewriting core functionality, removing checks, changing data
+          models without migration coverage, or unprotected changes to
+          production-critical flows or infrastructure.
