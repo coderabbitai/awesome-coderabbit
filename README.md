@@ -79,17 +79,16 @@ chat:
   auto_reply: true
 ```
 
-Find more examples in the [`configs/`](configs/) directory, organized by language:
+Find more examples in the [`configs/`](configs/) directory:
 
 ```
 configs/
-├── javascript/   # JavaScript project configurations
-├── typescript/   # TypeScript project configurations
-├── python/       # Python project configurations
-├── go/          # Go project configurations
-└── multi-language/ # Full-stack project configurations
+├── default/    # Examples of all values, general rules for any project (full-stack, etc.)
+├── go/         # Go project configurations
+├── javascript/ # JavaScript project configurations
+├── python/     # Python project configurations
+└── typescript/ # TypeScript project configurations
 ```
-
 
 ## Integration Guides
 
