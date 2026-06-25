@@ -17,7 +17,7 @@ early_access: false
 enable_free_tier: true
 
 reviews:
-  # Set the profile for reviews. `Assertive` profile yields more feedback, that may be considered nitpick.
+  # Set the profile for reviews. `assertive` profile yields more feedback, that may be considered nitpick.
   # default: chill
   profile: chill
 
