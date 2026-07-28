@@ -126,6 +126,7 @@ configs/
 > Here is a list of some of the open-source projects using CodeRabbit for AI-powered code reviews.
 
 - [Appsmith](https://github.com/appsmithorg/appsmith) - Low-code platform for building internal tools [Example Review](https://github.com/appsmithorg/appsmith/pull/37200).
+- [Bun](https://github.com/oven-sh/bun) - Fast, all-in-one JavaScript runtime and toolkit [Example Review](https://github.com/oven-sh/bun/pull/36196).
 - [Crowd.dev](https://github.com/CrowdDotDev/crowd.dev) - Open-source developer community platform [Example Review](https://github.com/CrowdDotDev/crowd.dev/pull/2671).
 - [Documenso](https://github.com/documenso/documenso) - Open-source DocuSign alternative [Example Review](https://github.com/documenso/documenso/pull/1436).
 - [Formbricks](https://github.com/formbricks/formbricks) - Open-source survey & experience management solution [Example Review](https://github.com/formbricks/formbricks/pull/4229).
