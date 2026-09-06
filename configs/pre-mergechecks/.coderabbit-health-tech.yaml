@@ -11,7 +11,7 @@ reviews:
       - name: "Authorize Patient Record Access"
         mode: "warning"
         instructions: >-
-          When a changed API handler, resolver, command, or service reads or mutates a patient or clinical record using an identifier from a request or message, fail if it does not verify that the authenticated principal is permitted to access that specific record. Authentication alone is insufficient. Trace calls to existing guards or policy helpers and verify their behavior before passing. Pass when access is constrained by a verified patient relationship, care-team role, tenant scope, or explicit record policy. Mark not applicable for public reference data and changes that do not access patient records.
+          When a changed API handler, resolver, command, or service reads or mutates a patient or clinical record using an identifier from a request or message, fail if it does not verify that the authenticated principal is permitted to access that specific record. Authentication and tenant scope alone are insufficient. Trace calls to existing guards or policy helpers and verify their behavior before passing. Pass when tenant scope is enforced where applicable and record access is authorized through a verified patient relationship, care-team role, or explicit record policy. Mark not applicable for public reference data and changes that do not access patient records.
 
       - name: "Minimize Health Data Responses"
         mode: "warning"

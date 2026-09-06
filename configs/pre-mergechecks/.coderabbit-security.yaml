@@ -6,7 +6,7 @@ reviews:
       - name: "Query Parameterization Enforcement"
         mode: "error"
         instructions: >-
-          Review all new or modified database query construction. Fail if a query is built by concatenating or interpolating user-supplied or otherwise untrusted input directly into executable query text. Use parameterized queries or prepared statements with placeholders for external values. Do not flag composition from fixed, code-defined fragments or identifiers selected through a strict allowlist. Reuse prepared statements for repeated queries rather than rebuilding them per call. Pass when no untrusted value can alter query structure.
+          Review all new or modified database query construction. Fail if a query is built by concatenating or interpolating user-supplied or otherwise untrusted input directly into executable query text. Use parameterized queries or prepared statements with placeholders for external values. Do not flag composition from fixed, code-defined fragments or identifiers selected through a strict allowlist. Pass when no untrusted value can alter query structure.
 
       - name: "Sensitive Output Leak Prevention"
         mode: "error"
@@ -21,7 +21,7 @@ reviews:
       - name: "Dependency Risk Assessment"
         mode: "warning"
         instructions: >-
-          When dependency manifests or lock files are modified, review newly added or upgraded third-party libraries. Flag a security vulnerability only after verifying that a public advisory applies to the direct or resolved transitive version; return inconclusive when the version or affected range cannot be established. Flag non-permissive licenses (e.g., AGPL, GPL) only when the repository documents a permissive-license policy. Pay particular attention to libraries handling authentication, payments, health data, or cryptography. Require PR justification for a verified legal or security risk.
+          When dependency manifests, constraints, or lock files are modified, review every changed direct and resolved transitive dependency version, including additions, upgrades, and downgrades. Flag a security vulnerability only after verifying that a public advisory applies to the resolved version; return inconclusive when the version or affected range cannot be established. Flag non-permissive licenses (e.g., AGPL, GPL) only when the repository documents a permissive-license policy. Pay particular attention to libraries handling authentication, payments, health data, or cryptography. Require PR justification for a verified legal or security risk.
 
       - name: "Personal Data Exposure Guard"
         mode: "error"

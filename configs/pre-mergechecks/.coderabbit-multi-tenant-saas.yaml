@@ -11,7 +11,7 @@ reviews:
       - name: "Partition Tenant Cache Entries"
         mode: "warning"
         instructions: >-
-          When changed code reads or writes cached tenant-owned data, fail if the cache key or cache namespace does not include a trusted tenant identifier. Also fail when tenant context is added to a data lookup but the corresponding cache key remains globally shared. Pass when the key is visibly tenant-partitioned or when a referenced cache helper can be verified to add the tenant namespace. Mark not applicable for public, immutable, or explicitly global data and for changes that do not use a cache.
+          When changed code reads or writes cached tenant-owned data, fail if the cache key or namespace omits the trusted tenant identifier or another trusted authorization dimension that changes the cached value, such as user, role, delegated scope, or resource permissions. Do not require access-control dimensions that affect only whether a caller may read an otherwise identical value. Pass when the key includes every dimension that changes the value, a verified cache helper adds them, or sharing is explicitly intentional. Mark not applicable for public, immutable, explicitly global, or non-cached data.
 
       - name: "Authorize Privileged Tenant Changes"
         mode: "warning"

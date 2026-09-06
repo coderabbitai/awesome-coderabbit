@@ -6,7 +6,7 @@ reviews:
       - name: "Use Exact Monetary Arithmetic"
         mode: "warning"
         instructions: >-
-          When changed code stores, parses, calculates, or compares monetary amounts, fail if it uses binary floating-point values without converting immediately to an exact money representation. Require integer minor units, a decimal type, or the repository's established money type, with currency and rounding behavior explicit at conversion boundaries. Pass when calculations use an exact representation throughout. Mark not applicable for display-only formatting of an already exact amount and for changes that do not handle money.
+          When changed code stores, parses, calculates, or compares monetary amounts, fail if it uses binary floating-point values or constructs an exact decimal type directly from a float or double, such as `BigDecimal(double)` or `Decimal(float)`. Precision may already be lost before conversion. Require decimal-string parsing, integer minor units, or the repository's established money type, with currency and rounding behavior explicit at conversion boundaries. Pass when calculations use an exact representation throughout. Mark not applicable for display-only formatting of an already exact amount and for changes that do not handle money.
 
       - name: "Make Financial Effects Idempotent"
         mode: "warning"
