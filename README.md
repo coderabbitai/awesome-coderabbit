@@ -10,6 +10,7 @@ This curated list covers the best resources, tutorials, and community content re
 - [Getting Started](#getting-started)
 - [API Reference](#api-reference)
 - [Configuration Examples](#configuration-examples)
+- [Pre-Merge Check Packs](#pre-merge-check-packs)
 - [Integration Guides](#integration-guides)
 - [Video Tutorials](#video-tutorials)
 - [Blogs](#blogs)
@@ -89,6 +90,13 @@ configs/
 ├── go/          # Go project configurations
 └── multi-language/ # Full-stack project configurations
 ```
+
+## Pre-Merge Check Packs
+
+The [pre-merge check catalog](configs/pre-mergechecks/README.md) contains
+copyable policy examples for common engineering risks, multi-tenant SaaS,
+fintech, and health tech. It explains how to select, adapt, and safely introduce
+individual checks without replacing existing repository configuration.
 
 
 ## Integration Guides

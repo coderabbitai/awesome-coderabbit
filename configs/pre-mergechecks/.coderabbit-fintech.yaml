@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "Use Exact Monetary Arithmetic"
+        mode: "warning"
+        instructions: >-
+          When changed code stores, parses, calculates, or compares monetary amounts, fail if it uses binary floating-point values without converting immediately to an exact money representation. Require integer minor units, a decimal type, or the repository's established money type, with currency and rounding behavior explicit at conversion boundaries. Pass when calculations use an exact representation throughout. Mark not applicable for display-only formatting of an already exact amount and for changes that do not handle money.
+
+      - name: "Make Financial Effects Idempotent"
+        mode: "warning"
+        instructions: >-
+          When changed code creates a charge, refund, payout, transfer, ledger entry, invoice payment, or financial-webhook side effect, fail if retrying the same logical operation can create a duplicate effect. Verify a stable idempotency key, provider event ID, or persisted deduplication record is checked at the side-effect boundary. An in-memory flag is insufficient. Pass when the provider call and local state transition are protected by a durable idempotency mechanism. Mark not applicable for read-only financial operations.
+
+      - name: "Keep Financial Secrets Out of Output"
+        mode: "warning"
+        instructions: >-
+          When changed code emits logs, analytics, errors, traces, or API responses involving financial data, fail if it can expose a full card number, card verification code, bank-account credential, payment-provider secret, or unredacted provider request containing those values. Masking must occur before the value reaches the output call. Pass when only approved tokens, non-sensitive identifiers, or masked values are emitted. Mark not applicable when the PR does not handle financial data or observable output.
+
+      - name: "Audit Financial State Transitions"
+        mode: "warning"
+        instructions: >-
+          When changed code transitions a payment, refund, payout, transfer, invoice, or ledger entry between business states, fail if it bypasses the repository's existing durable audit or domain-event mechanism. Verify the recorded event identifies the affected entity, transition, initiating actor or system, and correlation or provider event ID without including sensitive financial credentials. Pass when the existing audit mechanism is invoked with those fields. Mark not applicable when no financial state transition is added or modified, or when the repository has no established audit mechanism to enforce.
