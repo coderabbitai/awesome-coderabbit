@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "Keep Health Data Out of Telemetry"
+        mode: "warning"
+        instructions: >-
+          When changed code sends values to logs, traces, metrics, analytics, or error-reporting services, fail if a value can contain protected health information such as patient identity, medical record numbers, diagnoses, medications, test results, appointment details, or raw clinical content. Masking or removal must happen before the telemetry call. Pass when only approved non-sensitive identifiers or masked values are emitted. Mark not applicable when the PR does not change telemetry involving health data.
+
+      - name: "Authorize Patient Record Access"
+        mode: "warning"
+        instructions: >-
+          When a changed API handler, resolver, command, or service reads or mutates a patient or clinical record using an identifier from a request or message, fail if it does not verify that the authenticated principal is permitted to access that specific record. Authentication and tenant scope alone are insufficient. Trace calls to existing guards or policy helpers and verify their behavior before passing. Pass when tenant scope is enforced where applicable and record access is authorized through a verified patient relationship, care-team role, or explicit record policy. Mark not applicable for public reference data and changes that do not access patient records.
+
+      - name: "Minimize Health Data Responses"
+        mode: "warning"
+        instructions: >-
+          When changed server-side code returns patient or clinical data through an API, export, webhook, or third-party integration, fail if it serializes the full persistence model or removes sensitive fields with a denylist. Require an explicit response schema, projection, or allowlist containing only fields needed by that recipient. Pass when output fields are explicitly selected and authorization is applied before serialization. Mark not applicable when no health-data response or disclosure path is added or modified.
+
+      - name: "Audit Clinical Record Changes"
+        mode: "warning"
+        instructions: >-
+          When changed code creates, updates, deletes, or exports patient or clinical records, fail if it bypasses the repository's existing durable audit mechanism. Verify the audit event identifies the acting user or system, affected record or patient identifier, action, timestamp or correlation ID, and outcome without recording raw clinical content. Pass when the established audit mechanism is invoked with those fields. Mark not applicable when no clinical-record operation is added or modified, or when the repository has no established audit mechanism to enforce.

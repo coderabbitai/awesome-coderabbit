@@ -6,7 +6,7 @@ reviews:
       - name: "IaC Template Version Integrity"
         mode: "error"
         instructions: >-
-          When infrastructure-as-code templates (CloudFormation, Terraform modules, Chef cookbooks, Helm charts, Ansible roles) are modified, and functional sections of an IaC template are changed (resources, parameters, outputs, recipes, tasks, or equivalent—not comments or metadata-only fields), the template's version identifier must be incremented. Verify that the version field exists in the modified template and that its value has changed compared to the base branch. Fail if functional changes are present but the version is unchanged. Pass when the version is incremented for any functional change, or when only comments or documentation are modified.
+          When infrastructure-as-code templates (CloudFormation, Terraform modules, Chef cookbooks, Helm charts, Ansible roles) are modified, and functional sections of an IaC template are changed (resources, parameters, outputs, recipes, tasks, or equivalent—not comments or metadata-only fields), enforce version increments only when that template or repository already uses an explicit version field or documented versioning convention. Fail if functional changes are present but the established version is unchanged. Pass when it is incremented or only comments or documentation are modified. Mark not applicable when no version identifier or convention exists.
 
       - name: "Chart Dependency Lock Consistency"
         mode: "warning"

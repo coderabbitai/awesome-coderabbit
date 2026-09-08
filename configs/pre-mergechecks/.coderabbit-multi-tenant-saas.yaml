@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+reviews:
+  pre_merge_checks:
+    custom_checks:
+      - name: "Require Tenant-Scoped Data Access"
+        mode: "warning"
+        instructions: >-
+          When changed server-side code reads or mutates tenant-owned records, fail if the operation can select records by a resource ID or other global criteria without also constraining access to the authenticated tenant or an explicitly authorized cross-tenant scope. A tenant ID supplied only by the request is not proof of authorization; verify it is matched to trusted authentication context or an existing authorization policy. Pass when every applicable operation is tenant-scoped or calls a verified central policy that enforces the same constraint. Mark not applicable when the PR does not access tenant-owned data or the affected data is explicitly global.
+
+      - name: "Partition Tenant Cache Entries"
+        mode: "warning"
+        instructions: >-
+          When changed code reads or writes cached tenant-owned data, fail if the cache key or namespace omits the trusted tenant identifier or another trusted authorization dimension that changes the cached value, such as user, role, delegated scope, or resource permissions. Do not require access-control dimensions that affect only whether a caller may read an otherwise identical value. Pass when the key includes every dimension that changes the value, a verified cache helper adds them, or sharing is explicitly intentional. Mark not applicable for public, immutable, explicitly global, or non-cached data.
+
+      - name: "Authorize Privileged Tenant Changes"
+        mode: "warning"
+        instructions: >-
+          When a changed handler or service can alter tenant membership, roles, permissions, billing settings, security settings, or tenant ownership, fail if no authorization check is executed before the mutation. Verify the check by following calls to existing middleware, guards, or policy helpers; do not accept a function name as evidence without inspecting its behavior. Pass when the code requires an appropriate privileged role or a verified central policy. Mark not applicable when the PR does not add or modify a privileged tenant operation.
+
+      - name: "Scope Asynchronous Tenant Work"
+        mode: "warning"
+        instructions: >-
+          When changed producers or consumers enqueue, receive, or process work for tenant-owned resources, fail if the message lacks trusted tenant context or if the consumer loads the resource without verifying that it belongs to that tenant before causing side effects. Pass when both message context and resource access are tenant-scoped, or when the referenced job framework can be verified to enforce tenant scope centrally. Mark not applicable for global jobs and changes that do not process tenant-owned resources asynchronously.
