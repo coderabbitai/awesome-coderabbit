@@ -7,7 +7,7 @@ reviews:
   profile: chill
   request_changes_workflow: false
   disable_cache: true
-  collapse_walkthrough: false
+  collapse_walkthrough: true
   changed_files_summary: false
   sequence_diagrams: false
   estimate_code_review_effort: false
