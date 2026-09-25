@@ -28,8 +28,6 @@ reviews:
         - Do not post comments on code style, formatting, or non-critical
           improvements.
         - Keep reviews short: flag only issues that make the PR unsafe to merge.
-        - Limit review comments to 3–5 items maximum, unless additional blockers
-          exist.
         - Group similar issues into a single comment instead of posting multiple
           notes.
         - Skip repetition — if a pattern repeats, mention it once at a summary
