@@ -39,6 +39,8 @@ This curated list covers the best resources, tutorials, and community content re
 
 ## Configuration Examples
 
+You can easily generate a `.coderabbit.yaml` file using the [CodeRabbit Config Generator](https://github.com/ysknsid25/coderabbit-config-generator) via a GUI.
+
 ### Enterprise Configuration Example
 
 Explore real-world CodeRabbit configurations from various projects.
