@@ -105,6 +105,7 @@ individual checks without replacing existing repository configuration.
 - [CI/CD Pipeline Integration](https://www.coderabbit.ai/blog/how-to-run-static-analysis-on-your-ci-cd-pipelines-using-ai) - Adding AI-powered static analysis to CI/CD pipelines.
 - [Linear Board Integration](https://www.coderabbit.ai/blog/how-to-use-coderabbit-to-validate-issues-against-linear-board) - Guide for Linear board integration.
 - [DevOps Pipeline Integration](https://www.coderabbit.ai/blog/how-to-integrate-ai-code-review-into-your-devops-pipeline) - Comprehensive DevOps integration guide.
+- [Tomosu Reliability Checks via MCP](https://tomosu.ai/docs/coderabbit-mcp-guide) - Guide for connecting the Tomosu MCP server so CodeRabbit adds a Production Reliability Index (PRI) score and merge verdict to its PR reviews.
 
 ## Video Tutorials
 
