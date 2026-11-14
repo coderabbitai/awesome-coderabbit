@@ -2,6 +2,7 @@
 
 [CodeRabbit](https://www.coderabbit.ai) is an AI-powered code review tool that helps development teams improve code quality and accelerate the review process. It integrates with popular version control platforms and provides intelligent feedback on code changes.
 
+
 This curated list covers the best resources, tutorials, and community content related to CodeRabbit 🐰
 
 ## Contents
